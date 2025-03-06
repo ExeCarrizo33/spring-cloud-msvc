@@ -19,12 +19,12 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional(readOnly = true)
     public List<Product> findAll() {
-        return List.of();
+        return (List<Product>) productRepository.findAll();
     }
 
     @Override
     @Transactional(readOnly = true)
     public Optional<Product> findById(Long id) {
-        return Optional.empty();
+        return productRepository.findById(id);
     }
 }
