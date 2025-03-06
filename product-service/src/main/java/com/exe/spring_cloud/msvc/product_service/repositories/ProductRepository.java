@@ -1,4 +1,4 @@
-package com.exe.spring_cloud.msvc.product_service.models.repositories;
+package com.exe.spring_cloud.msvc.product_service.repositories;
 
 import com.exe.spring_cloud.msvc.product_service.models.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
