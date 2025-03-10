@@ -8,6 +8,9 @@ public class Item {
     private Product product;
     private Integer quantity;
 
+    public Item(Product product, int i) {
+    }
+
     private Double getTotal() {
         return product.getPrice() * quantity.doubleValue();
     }
