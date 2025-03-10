@@ -26,4 +26,7 @@ public class Product {
     @Column(name = "create_at")
     private LocalDate createdAt;
 
+    @Transient
+    private int port;
+
 }
