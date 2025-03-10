@@ -8,11 +8,13 @@ public class Item {
     private Product product;
     private Integer quantity;
 
-    public Item(Product product, int i) {
+    public Item(Product product, int quantity) {
+        this.product = product;
+        this.quantity = quantity;
     }
 
-    private Double getTotal() {
-        return product.getPrice() * quantity.doubleValue();
+    public Double getTotal() {
+        return product.getPrice() * quantity;
     }
 
 }
