@@ -1,0 +1,16 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: product-service
+          uri: lb://product-service # lb=Load balance en product-service
+          predicates:
+            - Path=/api/product/** # /api/product prefix
+          filters:
+            - StripPrefix=2 # Elimina el segmento /api/product prefix
+        - id: items-service
+          uri: lb://items-service
+          predicates:
+            - Path=/api/items/**
+          filters:
+            - StripPrefix=2
