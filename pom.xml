@@ -21,6 +21,7 @@
         <module>items-service</module>
         <module>product-service</module>
         <module>discovery-server</module>
+        <module>gateway-server</module>
     </modules>
 
     <properties>
