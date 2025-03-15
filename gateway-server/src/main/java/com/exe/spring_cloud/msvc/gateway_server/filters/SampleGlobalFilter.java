@@ -34,21 +34,29 @@ public class SampleGlobalFilter implements GlobalFilter, Ordered {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 
+        // Registra un mensaje indicando la ejecución del filtro pre
         logger.info("Ejecutando el filtro global pre");
 
+        // Modifica el intercambio para añadir un encabezado personalizado "token" con el valor "abcdefg"
         ServerWebExchange mutatedExchange = exchange.mutate()
                 .request(exchange.getRequest().mutate().headers(h -> h.add("token", "abcdefg")).build())
                 .build();
 
+        // Continúa la cadena de filtros y añade una acción post-filtro
         return chain.filter(exchange).then(Mono.fromRunnable(() -> {
+            // Registra un mensaje indicando la ejecución del filtro post
             logger.info("Ejecutando el filtro global post");
+
+            // Recupera el encabezado "token" del intercambio modificado
             String token = mutatedExchange.getRequest().getHeaders().getFirst("token");
             if (token != null) {
+                // Registra el valor del token si existe
                 logger.info("token: " + token);
             }
 
-
+            // Añade una cookie llamada "color" con el valor "red" a la respuesta
             exchange.getResponse().getCookies().add("color", ResponseCookie.from("color", "red").build());
+            // Establece el tipo de contenido de la respuesta a texto plano
             exchange.getResponse().getHeaders().setContentType(MediaType.TEXT_PLAIN);
         }));
     }
