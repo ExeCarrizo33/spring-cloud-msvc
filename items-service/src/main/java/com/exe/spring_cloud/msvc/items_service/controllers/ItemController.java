@@ -4,9 +4,7 @@ import com.exe.spring_cloud.msvc.items_service.models.Item;
 import com.exe.spring_cloud.msvc.items_service.services.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
@@ -20,7 +18,10 @@ public class ItemController {
 
 
     @GetMapping
-    public List<Item> findAll() {
+    public List<Item> findAll(@RequestParam(name = "name", required = false) String name,
+                              @RequestHeader(name = "token-request", required = false) String token) {
+        System.out.println("name = " + name);
+        System.out.println("token = " + token);
         return itemService.findAll();
     }
 

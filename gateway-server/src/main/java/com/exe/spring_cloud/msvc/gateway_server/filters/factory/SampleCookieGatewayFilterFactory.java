@@ -1,20 +1,22 @@
 package com.exe.spring_cloud.msvc.gateway_server.filters.factory;
 
 import lombok.Data;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
+import org.springframework.cloud.gateway.filter.OrderedGatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 import java.util.Optional;
-import java.util.logging.Logger;
+
 
 @Component
 public class SampleCookieGatewayFilterFactory extends AbstractGatewayFilterFactory<SampleCookieGatewayFilterFactory.ConfigCookie> {
 
-    private final Logger logger = (Logger) LoggerFactory.getLogger(SampleCookieGatewayFilterFactory.class);
+    private final Logger logger = LoggerFactory.getLogger(SampleCookieGatewayFilterFactory.class);
 
     public SampleCookieGatewayFilterFactory() {
         super(ConfigCookie.class);
@@ -22,7 +24,7 @@ public class SampleCookieGatewayFilterFactory extends AbstractGatewayFilterFacto
 
     @Override
     public GatewayFilter apply(ConfigCookie config) {
-        return ((exchange, chain) -> {
+        return new OrderedGatewayFilter((exchange, chain) -> {
             logger.info("Ejecutando el pre gateway filter factory: " + config.message);
 
             return chain.filter(exchange).then(Mono.fromRunnable(() -> {
@@ -32,7 +34,7 @@ public class SampleCookieGatewayFilterFactory extends AbstractGatewayFilterFacto
                 logger.info("Ejecutando el post gateway filter factory: " + config.message);
             }));
 
-        });
+        }, 100);
     }
 
     @Data
