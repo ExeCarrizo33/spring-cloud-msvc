@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,12 +25,19 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> findById(@PathVariable Long id) {
+    public ResponseEntity<?> findById(@PathVariable Long id) throws InterruptedException {
+
+        if (id.equals(10L)) {
+            throw new IllegalStateException("No se puede cargar el producto");
+        }
+        if (id.equals(7L)) {
+            TimeUnit.SECONDS.sleep(5L);
+        }
+
         return productService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
-
 
 
 }

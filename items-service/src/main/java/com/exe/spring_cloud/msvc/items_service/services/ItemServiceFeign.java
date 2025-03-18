@@ -22,7 +22,7 @@ public class ItemServiceFeign implements ItemService {
     public List<Item> findAll() {
         return productFeignClient.findAll()
                 .stream()
-                .map(product -> new Item(product, new Random().nextInt(10)+1))
+                .map(product -> new Item(product, new Random().nextInt(10) + 1))
                 .collect(Collectors.toList());
     }
 

@@ -38,7 +38,7 @@ public class SampleCookieGatewayFilterFactory extends AbstractGatewayFilterFacto
     }
 
     @Data
-    public static class ConfigCookie{
+    public static class ConfigCookie {
         private String name;
         private String value;
         private String message;

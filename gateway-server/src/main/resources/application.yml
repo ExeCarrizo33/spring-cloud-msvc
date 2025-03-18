@@ -14,7 +14,7 @@ spring:
             - StripPrefix=2 # Elimina el segmento /api/product prefix
             - name: SampleCookie
               args:
-                message: Hola este es mi mensaje personalizado para productos! 
+                message: Hola este es mi mensaje personalizado para productos!
                 name: user
                 value: Exe
             - SetResponseHeader=Content-Type, application/json

@@ -18,5 +18,4 @@ public interface ProductFeignClient {
     Product details(@PathVariable Long id);
 
 
-
 }

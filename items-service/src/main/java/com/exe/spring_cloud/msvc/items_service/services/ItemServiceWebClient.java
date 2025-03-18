@@ -27,7 +27,7 @@ public class ItemServiceWebClient implements ItemService {
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .bodyToFlux(Product.class)
-                .map(product -> new Item(product, new Random().nextInt(10)+1))
+                .map(product -> new Item(product, new Random().nextInt(10) + 1))
                 .collectList()
                 .block();
     }
@@ -43,7 +43,7 @@ public class ItemServiceWebClient implements ItemService {
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .bodyToMono(Product.class)
-                .map(product -> new Item(product, new Random().nextInt(10)+1))
+                .map(product -> new Item(product, new Random().nextInt(10) + 1))
                 .block());
     }
 }
