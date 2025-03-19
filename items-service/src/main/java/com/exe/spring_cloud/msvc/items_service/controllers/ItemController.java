@@ -34,16 +34,16 @@ public class ItemController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> details(@PathVariable Long id) {
-     Optional<Item> itemOptional =  circuitBreakerFactory.create("items").run(() -> itemService.findById(id));// e -> {
-//            logger.error(e.getMessage());
-//            Product product = Product.builder()
-//                    .createdAt(LocalDate.now())
-//                    .id(1L)
-//                    .name("Camara Sony")
-//                    .price(500.00)
-//                    .build();
-//            return Optional.of(new Item(product, 5));
-//        });
+     Optional<Item> itemOptional =  circuitBreakerFactory.create("items").run(() -> itemService.findById(id), e -> {
+            logger.error(e.getMessage());
+            Product product = Product.builder()
+                    .createdAt(LocalDate.now())
+                    .id(1L)
+                   .name("Camara Sony")
+                   .price(500.00)
+                    .build();
+            return Optional.of(new Item(product, 5));
+        });
         if (itemOptional.isPresent()) {
             return ResponseEntity.ok(itemOptional.get());
         }

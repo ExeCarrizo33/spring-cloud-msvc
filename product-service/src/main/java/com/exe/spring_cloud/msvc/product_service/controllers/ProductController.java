@@ -31,7 +31,7 @@ public class ProductController {
             throw new IllegalStateException("No se puede cargar el producto");
         }
         if (id.equals(7L)) {
-            TimeUnit.SECONDS.sleep(5L);
+            TimeUnit.SECONDS.sleep(3L);
         }
 
         return productService.findById(id)

@@ -1,6 +1,7 @@
 package com.exe.spring_cloud.msvc.items_service.clients;
 
 import io.github.resilience4j.circuitbreaker.CircuitBreakerConfig;
+import io.github.resilience4j.timelimiter.TimeLimiterConfig;
 import org.springframework.cloud.circuitbreaker.resilience4j.Resilience4JCircuitBreakerFactory;
 import org.springframework.cloud.circuitbreaker.resilience4j.Resilience4JConfigBuilder;
 import org.springframework.cloud.client.circuitbreaker.Customizer;
@@ -22,6 +23,10 @@ public class AppConfig {
                             .failureRateThreshold(50)
                             .waitDurationInOpenState(Duration.ofSeconds(10L))
                             .permittedNumberOfCallsInHalfOpenState(5)
+                            .slowCallDurationThreshold(Duration.ofSeconds(2L))
+                            .slowCallRateThreshold(50)
+                            .build())
+                    .timeLimiterConfig(TimeLimiterConfig.custom().timeoutDuration(Duration.ofSeconds(2L))
                             .build())
                     .build();
         });
