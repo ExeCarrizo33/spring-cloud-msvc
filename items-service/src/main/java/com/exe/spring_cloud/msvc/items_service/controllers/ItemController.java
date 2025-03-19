@@ -39,8 +39,8 @@ public class ItemController {
             Product product = Product.builder()
                     .createdAt(LocalDate.now())
                     .id(1L)
-                   .name("Camara Sony")
-                   .price(500.00)
+                    .name("Camara Sony")
+                    .price(500.00)
                     .build();
             return Optional.of(new Item(product, 5));
         });
