@@ -3,6 +3,7 @@ package com.exe.spring_cloud.msvc.items_service.controllers;
 import com.exe.spring_cloud.msvc.items_service.models.Item;
 import com.exe.spring_cloud.msvc.items_service.models.Product;
 import com.exe.spring_cloud.msvc.items_service.services.ItemService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,5 +54,29 @@ public class ItemController {
                         "No existe el producto en el microservicio products"));
     }
 
+    @CircuitBreaker(name = "items", fallbackMethod = "getFallBackMethodProduct")
+    @GetMapping("details/{id}")
+    public ResponseEntity<?> details2(@PathVariable Long id) {
+        Optional<Item> itemOptional =  itemService.findById(id);
+
+        if (itemOptional.isPresent()) {
+            return ResponseEntity.ok(itemOptional.get());
+        }
+        return ResponseEntity.status(404)
+                .body(Collections.singletonMap(
+                        "message",
+                        "No existe el producto en el microservicio products"));
+    }
+
+    public ResponseEntity<?> getFallBackMethodProduct(Throwable e) {
+        logger.error(e.getMessage());
+        Product product = Product.builder()
+                .createdAt(LocalDate.now())
+                .id(1L)
+                .name("Camara Sony")
+                .price(500.00)
+                .build();
+        return ResponseEntity.ok(new Item(product, 5));
+    }
 
 }
