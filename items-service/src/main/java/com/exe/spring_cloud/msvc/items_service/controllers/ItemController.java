@@ -8,14 +8,13 @@ import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
 @RestController
@@ -26,6 +25,9 @@ public class ItemController {
     private final ItemService itemService;
     private final CircuitBreakerFactory circuitBreakerFactory;
 
+    @Value("${configuracion.texto}")
+    private String text;
+
 
     @GetMapping
     public List<Item> findAll(@RequestParam(name = "name", required = false) String name,
@@ -34,6 +36,17 @@ public class ItemController {
         System.out.println("token = " + token);
         return itemService.findAll();
     }
+
+    @GetMapping("/fetch-configs")
+    public ResponseEntity<?> fetchConfigs(@Value("${server.port}") String port) {
+        Map<String, String> json = new HashMap<>();
+        json.put("text", text);
+        json.put("port", port);
+        logger.info(text);
+        logger.info(port);
+        return ResponseEntity.ok(json);
+    }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<?> details(@PathVariable Long id) {
