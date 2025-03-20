@@ -1,31 +1,60 @@
+# Configuración de Resilience4j
+resilience4j:
+  # Configuración de Circuit Breaker
+  circuitbreaker:
+    configs:
+      default:
+        sliding-window-size: 6 # Tamaño de la ventana deslizante
+        failure-rate-threshold: 50 # Umbral de tasa de fallos
+        wait-duration-in-open-state: 20s # Duración de espera en estado abierto
+        permitted-number-of-calls-in-half-open-state: 4 # Número de llamadas permitidas en estado medio abierto
+        slow-call-duration-threshold: 3s # Umbral de duración de llamada lenta
+        slow-call-rate-threshold: 50 # Umbral de tasa de llamadas lentas
+    instances:
+      products:
+        baseConfig: default # Configuración base para el circuito de productos
+  # Configuración de Time Limiter
+  timelimiter:
+    configs:
+      default:
+        timeout-duration: 4s # Duración del tiempo de espera
+    instances:
+      products:
+        baseConfig: default # Configuración base para el limitador de tiempo de productos
+
+# Configuración de Spring Cloud Gateway
 spring:
   cloud:
     gateway:
       routes:
         - id: product-service
-          uri: lb://product-service # lb=Load balance en product-service
+          uri: lb://product-service # lb=Balanceo de carga en product-service
           predicates:
-            - Path=/api/product/** # /api/product prefix
-            #- Header=token, 12345
-            #- Method=GET, POST
-            #- Query=color, verde
-            #- Cookie=color, azul
+            - Path=/api/products/** # Prefijo /api/product
+            #- Header=token, 12345 #  Predicado de cabecera
+            #- Method=GET, POST #  Predicado de método
+            #- Query=color, verde #  Predicado de consulta
+            #- Cookie=color, azul #  Predicado de cookie
           filters:
-            - StripPrefix=2 # Elimina el segmento /api/product prefix
-            - name: SampleCookie
-              args:
-                message: Hola este es mi mensaje personalizado para productos!
-                name: user
-                value: Exe
-            - SetResponseHeader=Content-Type, application/json
+              - name: CircuitBreaker
+                args:
+                  name: products # Nombre del circuito
+                  statusCodes: 500
+                  fallbackUri: forward:/api/items/5 # Ruta de reenvío
+              - StripPrefix=2 # Elimina el segmento /api/product del prefijo
+              - name: SampleCookie
+                args:
+                  message: Hola este es mi mensaje personalizado para productos! # Mensaje personalizado para productos
+                  name: user # Nombre del cookie
+                  value: Exe # Valor del cookie
+              - SetResponseHeader=Content-Type, application/json # Establece el encabezado de respuesta Content-Type
         - id: items-service
-          uri: lb://items-service
+          uri: lb://items-service # Balanceo de carga en items-service
           predicates:
-            - Path=/api/items/**
+            - Path=/api/items/** # Prefijo /api/items
           filters:
-            - StripPrefix=2
-            - AddRequestHeader=token-request, sdfasa
-            - AddResponseHeader=token-response, asdfas
-            - AddRequestParameter=name, Exe
-            - SetResponseHeader=Content-Type, application/json
-
+            - StripPrefix=2 # Elimina el segmento /api/items del prefijo
+            - AddRequestHeader=token-request, sdfasa # Añade un encabezado de solicitud
+            - AddResponseHeader=token-response, asdfas # Añade un encabezado de respuesta
+            - AddRequestParameter=name, Exe # Añade un parámetro de solicitud
+            - SetResponseHeader=Content-Type, application/json # Establece el encabezado de respuesta Content-Type
