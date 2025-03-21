@@ -12,6 +12,7 @@ import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+
 @Service
 @RequiredArgsConstructor
 public class ItemServiceFeign implements ItemService {
@@ -38,17 +39,16 @@ public class ItemServiceFeign implements ItemService {
 
     @Override
     public Product save(Product product) {
-        return null;
+        return productFeignClient.create(product);
     }
 
     @Override
     public Product update(Product product, Long id) {
-        return null;
+        return productFeignClient.update(product, id);
     }
 
     @Override
-    public Void delete(Long id) {
-
-        return null;
+    public void delete(Long id) {
+        productFeignClient.delete(id);
     }
 }
