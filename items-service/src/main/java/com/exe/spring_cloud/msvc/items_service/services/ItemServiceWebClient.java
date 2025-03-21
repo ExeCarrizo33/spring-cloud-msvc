@@ -8,7 +8,10 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 
 @Primary
 @Service
@@ -35,15 +38,47 @@ public class ItemServiceWebClient implements ItemService {
     @Override
     public Optional<Item> findById(Long id) {
 
-        Map<String, Long> params = new HashMap<>();
-        params.put("id", id);
         return Optional.ofNullable(this.webClientBuilder.build()
                 .get()
-                .uri("http://product-service/{id}", params)
+                .uri("http://product-service/{id}", Collections.singletonMap("id", id))
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .bodyToMono(Product.class)
                 .map(product -> new Item(product, new Random().nextInt(10) + 1))
                 .block());
+    }
+
+    @Override
+    public Product save(Product product) {
+
+        return webClientBuilder.build().post()
+                .uri("http://product-service")
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(product)
+                .retrieve()
+                .bodyToMono(Product.class)
+                .block();
+    }
+
+    @Override
+    public Product update(Product product, Long id) {
+
+        return webClientBuilder.build().put()
+                .uri("http://product-service/{id}", Collections.singletonMap("id", id))
+                .contentType(MediaType.APPLICATION_JSON)
+                .bodyValue(product)
+                .retrieve()
+                .bodyToMono(Product.class)
+                .block();
+    }
+
+    @Override
+    public void delete(Long id) {
+        webClientBuilder.build().delete()
+                .uri("http://product-service/{id}", Collections.singletonMap("id", id))
+                .retrieve()
+                .bodyToMono(Void.class)
+                .block();
+
     }
 }
