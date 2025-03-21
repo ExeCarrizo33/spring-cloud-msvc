@@ -1,6 +1,6 @@
 package com.exe.spring_cloud.msvc.product_service.services.Impl;
 
-import com.exe.spring_cloud.msvc.product_service.models.Product;
+import com.exe.spring_cloud.msvc.libs_common_service.models.Product;
 import com.exe.spring_cloud.msvc.product_service.repositories.ProductRepository;
 import com.exe.spring_cloud.msvc.product_service.services.ProductService;
 import lombok.RequiredArgsConstructor;

@@ -23,6 +23,7 @@
         <module>discovery-server</module>
         <module>gateway-server</module>
         <module>config-server</module>
+        <module>libs-commons-service</module>
     </modules>
 
     <properties>

@@ -1,8 +1,8 @@
 package com.exe.spring_cloud.msvc.items_service.controllers;
 
 import com.exe.spring_cloud.msvc.items_service.models.Item;
-import com.exe.spring_cloud.msvc.items_service.models.Product;
 import com.exe.spring_cloud.msvc.items_service.services.ItemService;
+import com.exe.spring_cloud.msvc.libs_common_service.models.Product;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
 import lombok.RequiredArgsConstructor;

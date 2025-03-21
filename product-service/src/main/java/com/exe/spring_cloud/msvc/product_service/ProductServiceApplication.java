@@ -2,8 +2,10 @@ package com.exe.spring_cloud.msvc.product_service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @SpringBootApplication
+@EntityScan({"com.exe.spring_cloud.msvc.libs_common_service.models"})
 public class ProductServiceApplication {
 
     public static void main(String[] args) {

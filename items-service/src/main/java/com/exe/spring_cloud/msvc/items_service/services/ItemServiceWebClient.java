@@ -1,7 +1,7 @@
 package com.exe.spring_cloud.msvc.items_service.services;
 
 import com.exe.spring_cloud.msvc.items_service.models.Item;
-import com.exe.spring_cloud.msvc.items_service.models.Product;
+import com.exe.spring_cloud.msvc.libs_common_service.models.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.MediaType;

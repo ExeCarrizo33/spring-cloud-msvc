@@ -2,7 +2,7 @@ package com.exe.spring_cloud.msvc.items_service.services;
 
 import com.exe.spring_cloud.msvc.items_service.clients.ProductFeignClient;
 import com.exe.spring_cloud.msvc.items_service.models.Item;
-import com.exe.spring_cloud.msvc.items_service.models.Product;
+import com.exe.spring_cloud.msvc.libs_common_service.models.Product;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

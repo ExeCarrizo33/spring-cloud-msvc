@@ -1,7 +1,7 @@
 package com.exe.spring_cloud.msvc.items_service.services;
 
 import com.exe.spring_cloud.msvc.items_service.models.Item;
-import com.exe.spring_cloud.msvc.items_service.models.Product;
+import com.exe.spring_cloud.msvc.libs_common_service.models.Product;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,4 +1,4 @@
-package com.exe.spring_cloud.msvc.product_service.models;
+package com.exe.spring_cloud.msvc.libs_common_service.models;
 
 
 import jakarta.persistence.*;
