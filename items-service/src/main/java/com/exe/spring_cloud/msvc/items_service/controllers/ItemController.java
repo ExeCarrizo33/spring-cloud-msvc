@@ -10,6 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +19,7 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
 
+@RefreshScope
 @RestController
 @RequiredArgsConstructor
 public class ItemController {
@@ -27,6 +30,8 @@ public class ItemController {
 
     @Value("${configuracion.texto}")
     private String text;
+
+    private final Environment env;
 
 
     @GetMapping
@@ -44,6 +49,10 @@ public class ItemController {
         json.put("port", port);
         logger.info(text);
         logger.info(port);
+        if (env.getActiveProfiles().length > 0 && env.getActiveProfiles()[0].equals("dev")) {
+            json.put("autor.nombre", env.getProperty("configuracion.autor.nombre"));
+            json.put("autor.email", env.getProperty("configuracion.autor.email"));
+        }
         return ResponseEntity.ok(json);
     }
 
