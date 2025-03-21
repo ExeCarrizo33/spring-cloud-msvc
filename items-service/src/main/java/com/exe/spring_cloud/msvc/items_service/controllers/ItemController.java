@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -107,5 +108,25 @@ public class ItemController {
                 .build();
         return ResponseEntity.ok(new Item(product, 5));
     }
+
+    @PostMapping
+    public ResponseEntity<?> create(@RequestBody Product product) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(itemService.save(product));
+    }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<?> update(@RequestBody Product product, @PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(itemService.update(product, id));
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id) {
+        this.itemService.delete(id);
+    }
+
+
+
 
 }
