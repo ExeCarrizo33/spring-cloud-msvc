@@ -50,7 +50,7 @@ public class UserServiceImpl implements IUserService {
     public User update(Long id, User userDetails) {
         return userRepository.findById(id).map(user -> {
             user.setUsername(userDetails.getUsername());
-            user.setEnabled(userDetails.isEnabled());
+            user.setEnabled(userDetails.getEnabled());
             user.setEmail(userDetails.getEmail());
             return userRepository.save(user);
         }).orElseThrow(() -> new RuntimeException("User not found"));

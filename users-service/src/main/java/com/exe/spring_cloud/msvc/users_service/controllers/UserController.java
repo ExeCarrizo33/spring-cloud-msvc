@@ -5,6 +5,7 @@ import com.exe.spring_cloud.msvc.users_service.services.IUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.List;
 public class UserController {
 
     private final IUserService userService;
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping
     public List<User> findAll() {
@@ -37,6 +39,7 @@ public class UserController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> create(@RequestBody User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return ResponseEntity.ok(userService.create(user));
     }
 
