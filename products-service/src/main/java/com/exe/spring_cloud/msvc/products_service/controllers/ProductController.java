@@ -1,8 +1,8 @@
-package com.exe.spring_cloud.msvc.product_service.controllers;
+package com.exe.spring_cloud.msvc.products_service.controllers;
 
 
 import com.exe.spring_cloud.msvc.libs_common_service.models.Product;
-import com.exe.spring_cloud.msvc.product_service.services.ProductService;
+import com.exe.spring_cloud.msvc.products_service.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

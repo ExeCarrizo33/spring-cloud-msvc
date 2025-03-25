@@ -1,4 +1,4 @@
-package com.exe.spring_cloud.msvc.product_service.services;
+package com.exe.spring_cloud.msvc.products_service.services;
 
 import com.exe.spring_cloud.msvc.libs_common_service.models.Product;
 
