@@ -27,6 +27,13 @@ spring:
   cloud:
     gateway:
       routes:
+        - id: users-service
+          uri: lb://users-service # lb=Balanceo de carga en users-service
+          predicates:
+              - Path=/api/users/** # Prefijo /api/users
+          filters:
+              - StripPrefix=2 # Elimina el segmento /api/users del prefijo
+              - SetResponseHeader=Content-Type, application/json # Establece el encabezado de respuesta Content-Type
         - id: product-service
           uri: lb://product-service # lb=Balanceo de carga en product-service
           predicates:

@@ -22,7 +22,7 @@ public class UserController {
         return userService.findAll();
     }
 
-    @GetMapping("{/id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id) {
         return userService.findById(id)
                 .map(ResponseEntity::ok)
@@ -39,13 +39,15 @@ public class UserController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> create(@RequestBody User user) {
-        return ResponseEntity.ok(userService.create(user));
+        return new ResponseEntity<>(userService.create(user), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> update(@PathVariable Long id, @RequestBody User user) {
-        return ResponseEntity.ok(userService.update(id, user));
+        return userService.update(id, user)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")

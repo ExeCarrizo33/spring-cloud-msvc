@@ -48,6 +48,7 @@ public class UserServiceImpl implements IUserService {
         User newUser = User.builder()
                 .username(user.getUsername())
                 .password(passwordEncoder.encode(user.getPassword()))
+                .enabled(user.getEnabled() == null || user.getEnabled())
                 .email(user.getEmail())
                 .roles(getRoles(user))
                 .build();
