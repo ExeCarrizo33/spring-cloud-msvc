@@ -15,7 +15,7 @@ import java.util.List;
 public class UserController {
 
     private final IUserService userService;
-    private final PasswordEncoder passwordEncoder;
+
 
     @GetMapping
     public List<User> findAll() {
@@ -39,7 +39,6 @@ public class UserController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> create(@RequestBody User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return ResponseEntity.ok(userService.create(user));
     }
 

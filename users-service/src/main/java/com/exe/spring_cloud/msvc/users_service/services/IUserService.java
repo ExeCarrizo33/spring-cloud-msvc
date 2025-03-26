@@ -16,7 +16,7 @@ public interface IUserService {
 
     User create(User user);
 
-    User update(Long id, User user);
+    Optional<User> update(Long id, User user);
 
     void delete(Long id);
 
