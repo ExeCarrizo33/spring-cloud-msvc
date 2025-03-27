@@ -24,6 +24,26 @@ resilience4j:
 
 # Configuración de Spring Cloud Gateway
 spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://127.0.0.1:9100 # URI del emisor del JWT
+      client:
+        registration:
+          client-app:
+            provider: spring # Proveedor de OAuth2
+            client-id: gateway-app # ID del cliente
+            client-secret: 12345 # Secreto del cliente
+            authorization-grant-type: authorization_code # Tipo de concesión de autorización
+            redirect-uri: "http://127.0.0.1:8090/aurhorized" # URI de redirección
+            scope:
+              - openid # Alcance openid
+              - profile # Alcance profile
+            client-name: client-app # Nombre del cliente
+        provider:
+          spring:
+            issuer-uri: http://127.0.0.1:9100 # URI del emisor del JWT
   cloud:
     gateway:
       routes:
