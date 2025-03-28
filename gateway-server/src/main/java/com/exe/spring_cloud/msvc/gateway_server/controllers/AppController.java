@@ -9,8 +9,8 @@ import java.util.Map;
 @RestController
 public class AppController {
 
-    @GetMapping("/authorize")
-    public Map<String,String> authorize(@RequestParam String code){
+    @GetMapping("/authorized")
+    public Map<String,String> authorized(@RequestParam String code){
 
         Map<String, String> map = new HashMap<>();
         map.put("code", code);
