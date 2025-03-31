@@ -1,7 +1,9 @@
 package com.exe.spring_cloud.msvc.users_service.services;
 
 
-import com.exe.spring_cloud.msvc.users_service.models.User;
+
+
+import com.exe.spring_cloud.msvc.libs_common_service.models.User;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,11 +1,11 @@
 package com.exe.spring_cloud.msvc.users_service.controllers;
 
-import com.exe.spring_cloud.msvc.users_service.models.User;
+
+import com.exe.spring_cloud.msvc.libs_common_service.models.User;
 import com.exe.spring_cloud.msvc.users_service.services.IUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

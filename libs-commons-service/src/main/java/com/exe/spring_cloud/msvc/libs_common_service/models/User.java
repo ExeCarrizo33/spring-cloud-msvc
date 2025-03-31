@@ -1,10 +1,14 @@
-package com.exe.spring_cloud.msvc.users_service.models;
+package com.exe.spring_cloud.msvc.libs_common_service.models;
+
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
