@@ -27,11 +27,10 @@ public class UserService implements UserDetailsService {
         try {
             User user = webClient.build()
                     .get()
-                    .uri("/username/{username}", username) // Corrección: sin Map, directamente el valor
+                    .uri("/username/{username}", username)
                     .accept(MediaType.APPLICATION_JSON)
                     .retrieve()
                     .bodyToMono(User.class)
-                    .doOnSuccess(u -> System.out.println("Usuario encontrado: " + u.getUsername() + ", Password: " + u.getPassword()))
                     .block();
 
             if (user == null) {
@@ -47,7 +46,6 @@ public class UserService implements UserDetailsService {
                     user.getUsername(), user.getPassword(), user.getEnabled(),
                     true, true, true, roles);
         } catch (WebClientResponseException e) {
-            System.err.println("Error en WebClient: " + e.getStatusCode() + " - " + e.getResponseBodyAsString());
             throw new UsernameNotFoundException("Error en el login: " + e.getMessage());
         }
     }
