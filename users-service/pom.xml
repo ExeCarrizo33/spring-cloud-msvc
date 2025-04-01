@@ -73,11 +73,7 @@
             <groupId>jakarta.validation</groupId>
             <artifactId>jakarta.validation-api</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.exe.spring_cloud.msvc</groupId>
-            <artifactId>libs-commons-service</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
+
     </dependencies>
     <dependencyManagement>
         <dependencies>

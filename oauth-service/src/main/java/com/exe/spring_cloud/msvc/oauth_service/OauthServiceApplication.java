@@ -3,6 +3,7 @@ package com.exe.spring_cloud.msvc.oauth_service;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+
 @SpringBootApplication
 public class OauthServiceApplication {
 

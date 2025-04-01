@@ -1,10 +1,8 @@
 package com.exe.spring_cloud.msvc.users_service.services.Impl;
 
 
-
-
-import com.exe.spring_cloud.msvc.libs_common_service.models.Role;
-import com.exe.spring_cloud.msvc.libs_common_service.models.User;
+import com.exe.spring_cloud.msvc.users_service.models.Role;
+import com.exe.spring_cloud.msvc.users_service.models.User;
 import com.exe.spring_cloud.msvc.users_service.repositories.RoleRepository;
 import com.exe.spring_cloud.msvc.users_service.repositories.UserRepository;
 import com.exe.spring_cloud.msvc.users_service.services.IUserService;

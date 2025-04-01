@@ -1,4 +1,4 @@
-package com.exe.spring_cloud.msvc.libs_common_service.models;
+package com.exe.spring_cloud.msvc.users_service.models;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

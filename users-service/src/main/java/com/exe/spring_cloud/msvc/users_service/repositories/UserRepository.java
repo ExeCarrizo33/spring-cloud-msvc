@@ -1,6 +1,6 @@
 package com.exe.spring_cloud.msvc.users_service.repositories;
 
-import com.exe.spring_cloud.msvc.libs_common_service.models.User;
+import com.exe.spring_cloud.msvc.users_service.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,7 +1,7 @@
 package com.exe.spring_cloud.msvc.users_service.controllers;
 
 
-import com.exe.spring_cloud.msvc.libs_common_service.models.User;
+import com.exe.spring_cloud.msvc.users_service.models.User;
 import com.exe.spring_cloud.msvc.users_service.services.IUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -30,7 +30,7 @@ public class UserController {
     }
 
     @GetMapping("/username/{username}")
-    public ResponseEntity<?> findByUsername(@RequestParam String username) {
+    public ResponseEntity<?> findByUsername(@PathVariable String username) {
         return userService.findByUsername(username)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
