@@ -13,12 +13,12 @@ public class AppConfig {
 
     @Bean
     @LoadBalanced
-    WebClient.Builder webClient(){
+    WebClient.Builder webClient() {
         return WebClient.builder().baseUrl("http://users-service");
     }
 
     @Bean
-    PasswordEncoder passwordEncoder(){
+    PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
