@@ -2,6 +2,8 @@ package com.exe.spring_cloud.msvc.oauth_service.services;
 
 import com.exe.spring_cloud.msvc.oauth_service.models.User;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,10 +21,14 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
 
+    private final Logger logger = LoggerFactory.getLogger(UserService.class);
+
     private final WebClient.Builder webClient;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+        logger.info("Llamada a metodo del service UserService:loadUserByUsername, login con: {},", username);
 
         try {
             User user = webClient.build()
@@ -41,12 +47,14 @@ public class UserService implements UserDetailsService {
                     .stream()
                     .map(role -> new SimpleGrantedAuthority(role.getName()))
                     .collect(Collectors.toList());
-
+            logger.info("Se ha realizado el login con exito by username: {}", user);
             return new org.springframework.security.core.userdetails.User(
                     user.getUsername(), user.getPassword(), user.getEnabled(),
                     true, true, true, roles);
         } catch (WebClientResponseException e) {
-            throw new UsernameNotFoundException("Error en el login: " + e.getMessage());
+            String error = "Error en el login, no existe el users'" + username + " en el servicio de usuarios";
+            logger.error(error);
+            throw new UsernameNotFoundException(error);
         }
     }
 }
