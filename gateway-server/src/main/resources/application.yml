@@ -62,21 +62,21 @@ spring:
           filters:
               - StripPrefix=2 # Elimina el segmento /api/users del prefijo
               - SetResponseHeader=Content-Type, application/json # Establece el encabezado de respuesta Content-Type
-        - id: product-service
-          uri: lb://product-service # lb=Balanceo de carga en product-service
-          predicates:
-            - Path=/api/products/** # Prefijo /api/product
+#        - id: product-service
+#          uri: lb://product-service # lb=Balanceo de carga en product-service
+#          predicates:
+#            - Path=/api/products/** # Prefijo /api/product
             #- Header=token, 12345 #  Predicado de cabecera
             #- Method=GET, POST #  Predicado de método
             #- Query=color, verde #  Predicado de consulta
             #- Cookie=color, azul #  Predicado de cookie
-          filters:
+#          filters:
 #              - name: CircuitBreaker
 #                args:
 #                  name: products # Nombre del circuito
 #                  statusCodes: 500
 #                  fallbackUri: forward:/api/items/5 # Ruta de reenvío
-              - StripPrefix=2 # Elimina el segmento /api/product del prefijo
+#              - StripPrefix=2 # Elimina el segmento /api/product del prefijo
 ##              - name: SampleCookie
 ##                args:
 ##                  message: Hola este es mi mensaje personalizado para productos! # Mensaje personalizado para productos
