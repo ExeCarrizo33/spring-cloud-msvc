@@ -1,6 +1,7 @@
 package com.exe.spring_cloud.msvc.oauth_service.services;
 
 import com.exe.spring_cloud.msvc.oauth_service.models.User;
+import io.micrometer.tracing.Tracer;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +26,8 @@ public class UserService implements UserDetailsService {
 
     private final WebClient webClient;
 
+    private final Tracer tracer;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
@@ -48,12 +51,15 @@ public class UserService implements UserDetailsService {
                     .map(role -> new SimpleGrantedAuthority(role.getName()))
                     .collect(Collectors.toList());
             logger.info("Se ha realizado el login con exito by username: {}", user);
+            tracer.currentSpan().tag("success.login", "Se ha realizado el login con exito by username: " + user);
+
             return new org.springframework.security.core.userdetails.User(
                     user.getUsername(), user.getPassword(), user.getEnabled(),
                     true, true, true, roles);
         } catch (WebClientResponseException e) {
-            String error = "Error en el login, no existe el users'" + username + " en el servicio de usuarios";
+            String error = "Error en el login, no existe el users '" + username + "' en el servicio de usuarios";
             logger.error(error);
+            tracer.currentSpan().tag("error.login", error);
             throw new UsernameNotFoundException(error);
         }
     }
