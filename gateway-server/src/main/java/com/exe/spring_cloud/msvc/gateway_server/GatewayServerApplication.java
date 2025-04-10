@@ -4,6 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.servlet.function.RouterFunction;
+import org.springframework.web.servlet.function.ServerRequest;
 import org.springframework.web.servlet.function.ServerResponse;
 
 import static org.springframework.cloud.gateway.server.mvc.handler.GatewayRouterFunctions.route;
@@ -25,6 +26,14 @@ public class GatewayServerApplication {
     RouterFunction<ServerResponse> routerConfig() {
        return route("product-service").route(path("/api/products/**"), http())
                .filter(lb("product-service"))
+               .filter((request,next)-> {
+                   ServerRequest requestModified = ServerRequest.from(request)
+                           .header("message-request", "Hola desde el gateway")
+                           .build();
+                   ServerResponse response = next.handle(requestModified);
+                   response.headers().add("message-response","respuesta desde el gateway");
+                   return response;
+               })
                .filter(circuitBreaker(config -> config
                        .setId("products")
                        .setStatusCodes("500")

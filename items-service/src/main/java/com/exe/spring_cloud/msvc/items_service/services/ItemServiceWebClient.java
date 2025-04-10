@@ -18,13 +18,13 @@ import java.util.Random;
 @RequiredArgsConstructor
 public class ItemServiceWebClient implements ItemService {
 
-    private final WebClient.Builder webClientBuilder;
+    private final WebClient webClientBuilder;
 
 
     @Override
     public List<Item> findAll() {
 
-        return this.webClientBuilder.build()
+        return this.webClientBuilder
                 .get()
                 .uri("http://product-service")
                 .accept(MediaType.APPLICATION_JSON)
@@ -38,7 +38,7 @@ public class ItemServiceWebClient implements ItemService {
     @Override
     public Optional<Item> findById(Long id) {
 
-        return Optional.ofNullable(this.webClientBuilder.build()
+        return Optional.ofNullable(this.webClientBuilder
                 .get()
                 .uri("http://product-service/{id}", Collections.singletonMap("id", id))
                 .accept(MediaType.APPLICATION_JSON)
@@ -51,7 +51,7 @@ public class ItemServiceWebClient implements ItemService {
     @Override
     public Product save(Product product) {
 
-        return webClientBuilder.build().post()
+        return webClientBuilder.post()
                 .uri("http://product-service")
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(product)
@@ -63,7 +63,7 @@ public class ItemServiceWebClient implements ItemService {
     @Override
     public Product update(Product product, Long id) {
 
-        return webClientBuilder.build().put()
+        return webClientBuilder.put()
                 .uri("http://product-service/{id}", Collections.singletonMap("id", id))
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(product)
@@ -74,7 +74,7 @@ public class ItemServiceWebClient implements ItemService {
 
     @Override
     public void delete(Long id) {
-        webClientBuilder.build().delete()
+        webClientBuilder.delete()
                 .uri("http://product-service/{id}", Collections.singletonMap("id", id))
                 .retrieve()
                 .bodyToMono(Void.class)

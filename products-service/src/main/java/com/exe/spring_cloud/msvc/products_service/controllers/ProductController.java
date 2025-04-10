@@ -24,7 +24,8 @@ public class ProductController {
 
 
     @GetMapping
-    public List<Product> findAll() {
+    public List<Product> findAll(@RequestHeader(value = "message-request", required = false) String message) {
+        logger.info("message-request: {}", message);
         logger.info("Ingresando al metodo del controller ProductController:findAll");
         return productService.findAll();
     }
