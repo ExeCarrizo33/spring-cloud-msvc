@@ -2,12 +2,15 @@ package com.exe.spring_cloud.msvc.items_service.controllers;
 
 import com.exe.spring_cloud.msvc.items_service.models.Item;
 import com.exe.spring_cloud.msvc.items_service.services.ItemService;
+import com.exe.spring_cloud.msvc.items_service.services.ItemServiceFeign;
 import com.exe.spring_cloud.msvc.libs_common_service.models.Product;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -22,7 +25,6 @@ import java.util.concurrent.CompletableFuture;
 
 @RefreshScope
 @RestController
-@RequiredArgsConstructor
 public class ItemController {
 
     private final Logger logger = LoggerFactory.getLogger(ItemController.class);
@@ -32,7 +34,14 @@ public class ItemController {
     @Value("${configuracion.texto}")
     private String text;
 
+
     private final Environment env;
+
+    public ItemController(@Qualifier("itemServiceWebClient") ItemService itemService, CircuitBreakerFactory circuitBreakerFactory, Environment env) {
+        this.itemService = itemService;
+        this.circuitBreakerFactory = circuitBreakerFactory;
+        this.env = env;
+    }
 
 
     @GetMapping
