@@ -23,7 +23,7 @@ public class UserService implements UserDetailsService {
 
     private final Logger logger = LoggerFactory.getLogger(UserService.class);
 
-    private final WebClient.Builder webClient;
+    private final WebClient webClient;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -31,7 +31,7 @@ public class UserService implements UserDetailsService {
         logger.info("Llamada a metodo del service UserService:loadUserByUsername, login con: {},", username);
 
         try {
-            User user = webClient.build()
+            User user = webClient
                     .get()
                     .uri("/username/{username}", username)
                     .accept(MediaType.APPLICATION_JSON)

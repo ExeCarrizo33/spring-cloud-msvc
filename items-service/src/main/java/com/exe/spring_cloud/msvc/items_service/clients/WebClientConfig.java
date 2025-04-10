@@ -10,8 +10,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Configuration
 public class WebClientConfig {
 
-    private String url;
-
    /**
          * Configura un bean de `WebClient` con una URL base y una función de filtro de balanceador de carga.
          *
