@@ -28,7 +28,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://127.0.0.1:9100 # URI del emisor del JWT
+          issuer-uri: ${IP_ADDR:http://127.0.0.1:9100} # URI del emisor del JWT
       client:
         registration:
           client-app:
@@ -43,7 +43,7 @@ spring:
             client-name: client-app # Nombre del cliente
         provider:
           spring:
-            issuer-uri: http://127.0.0.1:9100 # URI del emisor del JWT
+            issuer-uri: ${IP_ADDR:http://127.0.0.1:9100} # URI del emisor del JWT
   cloud:
     gateway:
       mvc:
