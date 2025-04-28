@@ -1,0 +1,118 @@
+services:
+  config-server:
+    container_name: config-server
+    image: spring-config:latest
+    ports:
+      - "8888:8888"
+    restart: always
+    networks:
+      - springcloud
+
+  discovery-server:
+    container_name: discovery-server
+    image: discovery-server:latest
+    ports:
+      - "8761:8761"
+    restart: always
+    networks:
+      - springcloud
+
+  mysql8:
+    container_name: mysql8
+    image: mysql:8.0.42
+    ports:
+      - "3307:3306"
+    restart: always
+    networks:
+      - springcloud
+    environment:
+      MYSQL_DATABASE: db_spring_cloud
+      MYSQL_ROOT_PASSWORD: sasa1234
+
+  zipkin-server:
+    container_name: zipkin-server
+    image: zipkin-server:latest
+    ports:
+      - "9411:9411"
+    restart: always
+    networks:
+      - springcloud
+    environment:
+      STORAGE_TYPE: mysql
+      MYSQL_USER: zipkin
+      MYSQL_PASS: zipkin
+      MYSQL_HOST: mysql8
+    depends_on:
+      - mysql8
+
+  products-service:
+    container_name: products-service
+    image: products-service:latest
+    restart: always
+    networks:
+      - springcloud
+    depends_on:
+      - mysql8
+      - discovery-server
+      - zipkin-server
+
+  items-service:
+    container_name: items-service
+    image: items-service:latest
+    ports:
+      - "8002:8002"
+      - "8005:8005"
+      - "8007:8007"
+    restart: always
+    networks:
+      - springcloud
+    depends_on:
+      - products-service
+      - discovery-server
+      - zipkin-server
+
+  users-service:
+    container_name: users-service
+    image: users-service:latest
+    restart: always
+    networks:
+      - springcloud
+    depends_on:
+      - mysql8
+      - discovery-server
+      - zipkin-server
+
+  oauth-service:
+    container_name: oauth-service
+    image: oauth-service:latest
+    ports:
+      - "9100:9100"
+    restart: always
+    networks:
+      - springcloud
+    depends_on:
+      - users-service
+      - discovery-server
+      - zipkin-server
+
+  gateway-server:
+    container_name: gateway-server
+    image: gateway-server:latest
+    ports:
+      - "8090:8090"
+    restart: always
+    networks:
+      - springcloud
+    environment:
+      IP_ADDR: http://192.168.0.199:9100
+    depends_on:
+      - users-service
+      - discovery-server
+      - zipkin-server
+      - products-service
+      - items-service
+      - oauth-service
+
+networks:
+  springcloud:
+    driver: bridge
