@@ -1,60 +1,58 @@
-# 🧩 Microservicios con Spring Boot y Spring Cloud
+# Spring Cloud Microservicios
 
-Este proyecto es el resultado del curso **Microservicios con Spring Boot y Spring Cloud** dictado por el profesor Andrés Guzmán en Udemy. Implementa una arquitectura de microservicios utilizando herramientas modernas del ecosistema Spring, permitiendo la creación de servicios distribuidos, escalables y seguros.
+Este proyecto es el resultado del curso **"Microservicios con Spring Boot y Spring Cloud"** impartido por el profesor **Andrés Guzmán** en Udemy.  
+Implementa una arquitectura de microservicios utilizando herramientas modernas del ecosistema Spring, permitiendo la creación de servicios distribuidos, escalables y seguros.
 
-## 🚀 Tecnologías y herramientas utilizadas
+## Tecnologías y herramientas utilizadas
 
-### Backend:
-- **Java 17**
-- **Spring Boot 3**
-- **Spring Cloud**
+### Backend
+- Java 17
+- Spring Boot 3
+- Spring Cloud
   - Eureka Server (Service Discovery)
   - Spring Cloud Config (Centralización de configuración)
   - Spring Cloud Gateway (API Gateway)
-  - OpenFeign (Comunicación entre servicios)
-  - Spring Cloud Bus + RabbitMQ (Actualización de configuración en caliente)
-- **Spring Security con JWT**
-- **Spring Data JPA + Hibernate**
-- **Spring Web**
-- **Swagger / OpenAPI**
-- **Kafka (Integración básica)**
-- **Lombok**
-- **MySQL / MongoDB**
-- **Docker**
+  - Spring Security (Autenticación y autorización)
+  - Spring Cloud Sleuth y Zipkin (Trazabilidad de servicios)
+- OAuth2 (Autenticación)
+- Feign (Comunicación entre microservicios)
+- Lombok (Reducción de código boilerplate)
 
-## 🧱 Microservicios incluidos
+### Base de datos
+- MySQL
 
-| Servicio | Descripción |
-|---------|-------------|
-| `eureka-server` | Registro de servicios (Service Discovery) |
-| `gateway` | API Gateway que enruta y protege las peticiones |
-| `config-server` | Servidor centralizado de configuración |
-| `msvc-usuarios` | Gestión de usuarios |
-| `msvc-cursos` | Gestión de cursos |
-| `msvc-auth` | Servicio de autenticación con JWT |
-| `commons` | Librería compartida entre microservicios |
+### Contenedores y orquestación
+- Docker
+- Docker Compose
 
-## 🧪 Funcionalidades principales
+### Observabilidad
+- Zipkin (Trazabilidad de solicitudes)
 
-- Comunicación entre microservicios vía **OpenFeign**
-- Gestión de configuración dinámica con **Spring Cloud Config + Bus**
-- Seguridad con **JWT y Spring Security**
-- Registro y descubrimiento de servicios con **Eureka**
-- Documentación de API con **Swagger**
-- Manejo de errores y validaciones personalizadas
-- Contenerización con **Docker**
+## Estructura del proyecto
 
-## 🗂️ Estructura del proyecto
+El proyecto está compuesto por los siguientes módulos:
 
-```bash
-spring-cloud-msvc/
-│
-├── commons/                 # Librerías compartidas (DTOs, modelos)
-├── config-server/           # Servidor de configuración central
-├── eureka-server/           # Service registry (Eureka)
-├── gateway/                 # API Gateway con rutas y seguridad
-├── msvc-auth/               # Servicio de autenticación (JWT)
-├── msvc-cursos/             # Servicio de cursos
-├── msvc-usuarios/           # Servicio de usuarios
-├── docker-compose.yml       # Configuración de Docker
-└── README.md                # Este archivo
+- `config-server`: Servidor de configuración centralizada.
+- `discovery-server`: Servidor Eureka para el descubrimiento de servicios.
+- `gateway-server`: API Gateway que enruta las solicitudes a los microservicios correspondientes.
+- `oauth-service`: Servicio de autenticación y autorización utilizando OAuth2.
+- `users-service`: Microservicio para la gestión de usuarios.
+- `products-service`: Microservicio para la gestión de productos.
+- `items-service`: Microservicio para la gestión de ítems.
+- `libs-commons-service`: Librería común utilizada por los microservicios.
+- `zipkin`: Servicio para la trazabilidad de solicitudes entre microservicios.
+
+## Configuración y ejecución
+
+### Prerrequisitos
+- Java 17 instalado.
+- Docker y Docker Compose instalados.
+- MySQL en ejecución (puedes utilizar Docker para esto).
+
+### Pasos para la ejecución
+
+1. Clonar el repositorio:
+
+   ```bash
+   git clone https://github.com/ExeCarrizo33/spring-cloud-msvc.git
+   cd spring-cloud-msvc
